@@ -1,0 +1,13 @@
+Preprocessing,Model,auc_mean,auc_sd,acc_mean,acc_sd,prec_mean,prec_sd,rec_mean,rec_sd,f1_mean,f1_sd,brier_mean,brier_sd
+Raw (zeros kept),Logistic Regression,0.83,0.049,0.753,0.049,0.633,0.075,0.724,0.091,0.671,0.064,0.168,0.025
+Raw (zeros kept),Random Forest,0.832,0.048,0.752,0.05,0.628,0.068,0.73,0.082,0.673,0.062,0.164,0.022
+Raw (zeros kept),XGBoost,0.823,0.047,0.754,0.046,0.632,0.067,0.726,0.085,0.673,0.061,0.172,0.027
+Median imputation,Logistic Regression,0.837,0.048,0.756,0.052,0.639,0.079,0.712,0.097,0.67,0.071,0.166,0.025
+Median imputation,Random Forest,0.838,0.047,0.762,0.047,0.637,0.067,0.756,0.081,0.689,0.059,0.161,0.023
+Median imputation,XGBoost,0.829,0.047,0.76,0.048,0.641,0.073,0.736,0.081,0.682,0.06,0.167,0.028
+KNN imputation,Logistic Regression,0.838,0.047,0.758,0.053,0.641,0.078,0.72,0.101,0.674,0.072,0.166,0.025
+KNN imputation,Random Forest,0.834,0.05,0.757,0.056,0.631,0.072,0.747,0.085,0.682,0.069,0.162,0.024
+KNN imputation,XGBoost,0.825,0.05,0.752,0.054,0.63,0.076,0.728,0.082,0.673,0.066,0.17,0.031
+Iterative (MICE-style),Logistic Regression,0.837,0.048,0.759,0.053,0.643,0.08,0.719,0.097,0.675,0.072,0.166,0.025
+Iterative (MICE-style),Random Forest,0.836,0.047,0.753,0.053,0.627,0.071,0.75,0.08,0.68,0.063,0.162,0.024
+Iterative (MICE-style),XGBoost,0.828,0.05,0.758,0.048,0.634,0.068,0.745,0.086,0.682,0.062,0.169,0.03

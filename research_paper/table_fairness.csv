@@ -1,0 +1,7 @@
+Model,Group,n,Prevalence,Selection rate,TPR (recall),FPR,AUC
+Logistic Regression,Age < 30,109,0.202,0.211,0.455,0.149,0.803
+Logistic Regression,Age >= 30,83,0.542,0.627,0.822,0.395,0.757
+Random Forest,Age < 30,109,0.202,0.211,0.409,0.161,0.794
+Random Forest,Age >= 30,83,0.542,0.651,0.822,0.447,0.76
+XGBoost,Age < 30,109,0.202,0.183,0.364,0.138,0.788
+XGBoost,Age >= 30,83,0.542,0.639,0.8,0.447,0.743
