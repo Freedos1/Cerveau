@@ -1,0 +1,8 @@
+numpy>=1.24
+scipy>=1.10
+pandas>=2.0
+matplotlib>=3.7
+statsmodels>=0.14
+reportlab>=4.0      # only for build_report.py (PDF report)
+nbformat>=5.9       # only for build_notebook.py
+yfinance>=0.2       # optional: --source yfinance
