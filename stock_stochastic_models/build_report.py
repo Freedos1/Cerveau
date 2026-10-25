@@ -10,6 +10,7 @@ Usage:  python run_analysis.py && python build_report.py
 """
 
 import json
+import subprocess
 import warnings
 from pathlib import Path
 
@@ -131,17 +132,27 @@ subtitle = ParagraphStyle("subtitle", parent=body, fontName="Sans", fontSize=11,
                           alignment=TA_CENTER, textColor=MUTED, spaceAfter=4)
 
 story = []
+# The same content is also recorded as plain blocks, which build_report_docx.js
+# turns into the Word version, so the PDF and .docx can never drift apart.
+blocks = []
 fig_no = [0]
 tab_no = [0]
 
 
 def para(text, style=body):
     story.append(Paragraph(text, style))
+    blocks.append({"type": style.name, "text": text})
 
 
 def bullets(items):
     for it in items:
         story.append(Paragraph(it, bullet, bulletText="•"))
+        blocks.append({"type": "bullet", "text": it})
+
+
+def page_break():
+    story.append(PageBreak())
+    blocks.append({"type": "pagebreak"})
 
 
 def figure(name, text, width=16.2 * cm):
@@ -150,6 +161,8 @@ def figure(name, text, width=16.2 * cm):
     img = Image(str(FIG / name), width=width, height=width * h / w)
     story.append(KeepTogether([img, Spacer(1, 3),
                                Paragraph(f"<b>Figure {fig_no[0]}.</b> {text}", caption)]))
+    blocks.append({"type": "figure", "path": str(FIG / name), "width_cm": width / cm,
+                   "aspect": h / w, "caption": f"<b>Figure {fig_no[0]}.</b> {text}"})
     return fig_no[0]
 
 
@@ -171,6 +184,10 @@ def table(rows, text, col_widths=None, header_rows=1):
         Paragraph(f"<b>Table {tab_no[0]}.</b> {text}", ParagraphStyle(
             "tcap", parent=caption, fontName="Serif", textColor=INK, spaceAfter=4)),
         tbl, Spacer(1, 10)]))
+    widths = [w / cm for w in col_widths] if col_widths else None
+    blocks.append({"type": "table", "rows": [[str(c) for c in row] for row in rows],
+                   "widths_cm": widths, "header_rows": header_rows,
+                   "caption": f"<b>Table {tab_no[0]}.</b> {text}"})
     return tab_no[0]
 
 
@@ -213,7 +230,7 @@ bullets([
     "of these models to forecast direction; and treat OU price targets with caution.",
 ])
 
-story.append(PageBreak())
+page_break()
 
 # ---- 1. Introduction ---------------------------------------------------------
 para("1. Introduction and objectives", h1)
@@ -394,7 +411,7 @@ para(
     "significant for every stock.")
 
 # ---- 4. Simulation results ---------------------------------------------------
-story.append(PageBreak())
+page_break()
 para("4. Simulation results", h1)
 para(
     "Figures 3&ndash;5 show the simulated price paths from the forecast origin of "
@@ -608,7 +625,7 @@ para(
     "for the <i>width</i> of the distribution and treat its <i>centre</i> as an assumption.")
 
 # ---- References --------------------------------------------------------------
-story.append(PageBreak())
+page_break()
 para("References", h1)
 refs = [
     "Black, F., &amp; Scholes, M. (1973). The pricing of options and corporate liabilities. <i>Journal of Political Economy, 81</i>(3), 637&ndash;654. https://doi.org/10.1086/260062",
@@ -666,3 +683,12 @@ doc = SimpleDocTemplate(str(OUT), pagesize=A4, leftMargin=2.2 * cm, rightMargin=
                         author="Quantitative Research")
 doc.build(story, onFirstPage=on_page, onLaterPages=on_page)
 print(f"Report written to {OUT}")
+
+# ---- Word version ------------------------------------------------------------
+BLOCKS_JSON = RES / "report_blocks.json"
+BLOCKS_JSON.write_text(json.dumps(blocks, indent=1))
+try:
+    subprocess.run(["node", str(HERE / "build_report_docx.js"), str(BLOCKS_JSON),
+                    str(OUT.with_suffix(".docx"))], check=True)
+except (FileNotFoundError, subprocess.CalledProcessError) as exc:
+    print(f"Word version skipped ({exc}); needs Node.js and `npm install docx`.")

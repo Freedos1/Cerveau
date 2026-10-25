@@ -16,8 +16,8 @@ Monte Carlo comparison of three stochastic models for daily stock prices of
 | `Stock_Price_Stochastic_Models.ipynb` | **File 1** – executed notebook with README cells, step-by-step walkthrough, tables and figures |
 | `stochastic_models.py` | Library: data cleaning, diagnostics, the three models (`fit` / `simulate`), risk metrics, backtest, plots |
 | `run_analysis.py` | End-to-end pipeline that writes `figures/` and `results/` |
-| `Stochastic_Stock_Price_Modeling_Report.pdf` | **File 2** – final report (figures with captions, APA references) |
-| `build_report.py`, `build_notebook.py` | Regenerate the PDF and the notebook |
+| `Stochastic_Stock_Price_Modeling_Report.docx` / `.pdf` | **File 2** – final report in Word and PDF (identical content: figures with captions, APA references) |
+| `build_report.py`, `build_report_docx.js`, `build_notebook.py` | Regenerate the PDF + Word report and the notebook |
 | `data/kaggle_sp500_AAPL_JPM_KO.csv` | Daily prices, 2013-02-08 – 2018-02-07, from the Kaggle *S&P 500 stock data* dataset (Nugent, 2018) |
 
 ## How to run
@@ -25,7 +25,7 @@ Monte Carlo comparison of three stochastic models for daily stock prices of
 ```bash
 pip install -r requirements.txt
 python run_analysis.py              # ~1–2 min: simulations, risk metrics, backtest -> figures/, results/
-python build_report.py              # rebuild the PDF from those results
+python build_report.py              # rebuild the PDF and Word report (Word needs Node.js + `npm install docx`)
 jupyter notebook Stock_Price_Stochastic_Models.ipynb   # or VS Code; on Google Colab just upload the .ipynb and Run All
 ```
 
