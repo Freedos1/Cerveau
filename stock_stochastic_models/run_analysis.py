@@ -21,7 +21,6 @@ import json
 from pathlib import Path
 
 import matplotlib
-matplotlib.use("Agg")  # render to files; no display needed
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -182,4 +181,7 @@ def main(argv=None):
 
 
 if __name__ == "__main__":
+    # Render to files only. Set here, not at import, so that importing this
+    # module from a notebook keeps inline plots working.
+    matplotlib.use("Agg")
     main()

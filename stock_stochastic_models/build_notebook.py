@@ -4,7 +4,18 @@ Run `python build_notebook.py`, then execute it with
 `jupyter nbconvert --to notebook --execute --inplace Stock_Price_Stochastic_Models.ipynb`.
 """
 
+from pathlib import Path
+
 import nbformat as nbf
+
+# The notebook must also run on its own (e.g. uploaded alone to Google Colab),
+# so the setup cell embeds the two modules and recreates them if missing.
+MODULE_FILES = ["stochastic_models.py", "run_analysis.py"]
+module_sources = {name: Path(name).read_text() for name in MODULE_FILES}
+for name, src in module_sources.items():
+    assert "'''" not in src, f"{name} contains triple single quotes"
+modules_literal = "{\n" + "".join(
+    f"    {name!r}: r'''{src}''',\n" for name, src in module_sources.items()) + "}"
 
 md, code = nbf.v4.new_markdown_cell, nbf.v4.new_code_cell
 
@@ -19,7 +30,7 @@ cells = [
 | Step | Command |
 |---|---|
 | Install dependencies | `pip install -r requirements.txt` |
-| Run this notebook | open it in Jupyter / VS Code / Colab and *Run All* |
+| Run this notebook | open it in Jupyter / VS Code / Google Colab and *Run All* (on Colab the setup cell recreates the helper modules and downloads the data automatically) |
 | Or run the pipeline as a script | `python run_analysis.py` (add `--source yfinance` for fresh Yahoo Finance data, `--n-paths 5000` for more simulations) |
 | Rebuild the PDF report | `python build_report.py` |
 
@@ -30,6 +41,44 @@ cells = [
 * `data/kaggle_sp500_AAPL_JPM_KO.csv` - daily prices for the three stocks, extracted from the Kaggle *S&P 500 stock data* dataset (Nugent, 2018), 8 Feb 2013 - 7 Feb 2018. It is bundled so the analysis runs offline and is exactly reproducible.
 
 All randomness is seeded (`SEED = 42`), so re-running gives identical numbers."""),
+
+    md("""## 0. Setup
+
+The analysis code lives in `stochastic_models.py` and `run_analysis.py`. When the notebook is opened
+next to those files (VS Code, Jupyter, a cloned repository) they are used as they are. When it runs
+alone, e.g. uploaded to **Google Colab**, the cell below writes them into the working directory and
+downloads the price data, so *Run All* works anywhere. Existing files are never overwritten."""),
+
+    code("""# --- Make the notebook self-contained (needed on Google Colab) -------------
+import importlib.util, subprocess, sys
+from pathlib import Path
+
+# 1. Install any missing dependency (Colab already has most of them).
+for pkg in ["numpy", "scipy", "pandas", "matplotlib", "statsmodels"]:
+    if importlib.util.find_spec(pkg) is None:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", pkg])
+
+# 2. Recreate the helper modules if they are not next to the notebook.
+MODULES = """ + modules_literal + """
+for name, source in MODULES.items():
+    if not Path(name).exists():
+        Path(name).write_text(source)
+        print(f"Created {name}")
+
+# 3. Get the price data if it is missing: the Kaggle "S&P 500 stock data" set
+#    (Nugent, 2018), from a public mirror, filtered to the three tickers.
+DATA = Path("data/kaggle_sp500_AAPL_JPM_KO.csv")
+if not DATA.exists():
+    import pandas as pd
+    DATA.parent.mkdir(exist_ok=True)
+    url = "https://raw.githubusercontent.com/plotly/datasets/master/all_stocks_5yr.csv"
+    print("Downloading", url)
+    full = pd.read_csv(url)
+    full[full["Name"].isin(["AAPL", "JPM", "KO"])].to_csv(DATA, index=False)
+    print(f"Saved {DATA}")
+if "" not in sys.path and "." not in sys.path:
+    sys.path.insert(0, "")
+print("Setup complete.")"""),
 
     code("""import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)

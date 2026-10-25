@@ -26,7 +26,7 @@ Monte Carlo comparison of three stochastic models for daily stock prices of
 pip install -r requirements.txt
 python run_analysis.py              # ~1–2 min: simulations, risk metrics, backtest -> figures/, results/
 python build_report.py              # rebuild the PDF from those results
-jupyter notebook Stock_Price_Stochastic_Models.ipynb   # or open in VS Code / Colab and Run All
+jupyter notebook Stock_Price_Stochastic_Models.ipynb   # or VS Code; on Google Colab just upload the .ipynb and Run All
 ```
 
 Options: `python run_analysis.py --source yfinance --start 2023-01-01` downloads current prices
