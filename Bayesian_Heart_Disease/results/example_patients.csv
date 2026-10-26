@@ -1,0 +1,4 @@
+,posterior_probability,95%_CrI
+"55-year-old woman, non-anginal pain, normal tests",0.027,"(0.007, 0.059)"
+"60-year-old man, asymptomatic, 1 mm ST depression, reversible defect",0.962,"(0.924, 0.986)"
+"48-year-old man, atypical pain, flat ST slope, otherwise normal",0.207,"(0.07, 0.429)"

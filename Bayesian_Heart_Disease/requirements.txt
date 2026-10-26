@@ -1,0 +1,8 @@
+pymc>=5.20,<6
+arviz>=0.20,<0.23
+numpy
+pandas
+scipy
+scikit-learn
+matplotlib
+jupyter
