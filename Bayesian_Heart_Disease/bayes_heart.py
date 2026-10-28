@@ -208,19 +208,19 @@ LITERATURE = PriorSpec(
     name="M2 literature informed",
     intercept=INTERCEPT_LIT,
     coefs={
-        # Demographics: Diamond & Forrester (1979); Genders et al. (2011)
+        # Demographics: Diamond & Forrester (1979)
         "age":             (0.40, 0.30),   # ~1.5x odds per SD (~9 years)
         "sex":             (0.92, 0.50),   # men ~2.5x odds
         # Chest pain type vs typical angina: Diamond & Forrester (1979)
         "cp_atypical":     (-1.00, 0.75),
         "cp_nonanginal":   (-1.50, 0.75),
         "cp_asymptomatic": (0.00, 1.50),   # no clean literature analogue
-        # Classic risk factors: Wilson et al. (1998), small diagnostic effects
+        # Classic risk factors: judgement, small diagnostic effects
         "trestbps":        (0.20, 0.30),
         "chol":            (0.20, 0.30),
         "fbs":             (0.30, 0.50),
         "restecg_abn":     (0.20, 0.50),
-        # Exercise ECG: Gianrossi et al. (1989); Gibbons et al. (2002)
+        # Exercise ECG: Gianrossi et al. (1989)
         "thalach":         (-0.30, 0.50),
         "exang":           (0.80, 0.50),
         "oldpeak":         (0.60, 0.40),
@@ -368,7 +368,7 @@ def prior_data_conflict(idata_weak, spec: PriorSpec, features=FEATURES):
 
     z = (data_mean - prior_mean) / sqrt(data_sd^2 + prior_sd^2).
     |z| > 2 means the literature prior and the data disagree more than their
-    combined uncertainty allows, in the spirit of Evans and Moshonov (2006).
+    combined uncertainty allows.
     """
     b = posterior_draws(idata_weak, "beta")
     rows = []

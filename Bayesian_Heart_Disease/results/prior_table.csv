@@ -1,18 +1,18 @@
 feature,M1_mean,M1_sd,M2_mean,M2_sd,M2_prior_OR,source
-age,0.0,2.5,0.4,0.3,1.4918246976412703,Diamond & Forrester (1979); Genders et al. (2011)
-trestbps,0.0,2.5,0.2,0.3,1.2214027581601699,Wilson et al. (1998)
-chol,0.0,2.5,0.2,0.3,1.2214027581601699,Wilson et al. (1998)
-thalach,0.0,2.5,-0.3,0.5,0.7408182206817179,Gibbons et al. (2002)
+age,0.0,2.5,0.4,0.3,1.4918246976412703,Diamond & Forrester (1979)
+trestbps,0.0,2.5,0.2,0.3,1.2214027581601699,Judgement: small risk-factor effect
+chol,0.0,2.5,0.2,0.3,1.2214027581601699,Judgement: small risk-factor effect
+thalach,0.0,2.5,-0.3,0.5,0.7408182206817179,"Judgement, guided by Gianrossi et al. (1989)"
 oldpeak,0.0,2.5,0.6,0.4,1.8221188003905089,Gianrossi et al. (1989)
-sex,0.0,2.5,0.92,0.5,2.509290389936298,Diamond & Forrester (1979); Genders et al. (2011)
-fbs,0.0,2.5,0.3,0.5,1.3498588075760032,Wilson et al. (1998)
-exang,0.0,2.5,0.8,0.5,2.225540928492468,Gibbons et al. (2002)
-restecg_abn,0.0,2.5,0.2,0.5,1.2214027581601699,Gibbons et al. (2002)
+sex,0.0,2.5,0.92,0.5,2.509290389936298,Diamond & Forrester (1979)
+fbs,0.0,2.5,0.3,0.5,1.3498588075760032,Judgement: small risk-factor effect
+exang,0.0,2.5,0.8,0.5,2.225540928492468,"Judgement, guided by Gianrossi et al. (1989)"
+restecg_abn,0.0,2.5,0.2,0.5,1.2214027581601699,Judgement: small effect
 cp_atypical,0.0,2.5,-1.0,0.75,0.36787944117144233,Diamond & Forrester (1979)
 cp_nonanginal,0.0,2.5,-1.5,0.75,0.22313016014842982,Diamond & Forrester (1979)
 cp_asymptomatic,0.0,2.5,0.0,1.5,1.0,No clear analogue; kept vague
-slope_flat,0.0,2.5,0.5,0.5,1.6487212707001282,Gibbons et al. (2002)
-slope_down,0.0,2.5,0.7,0.6,2.0137527074704766,Gibbons et al. (2002)
+slope_flat,0.0,2.5,0.5,0.5,1.6487212707001282,"Judgement, guided by Gianrossi et al. (1989)"
+slope_down,0.0,2.5,0.7,0.6,2.0137527074704766,"Judgement, guided by Gianrossi et al. (1989)"
 thal_fixed,0.0,2.5,0.7,0.6,2.0137527074704766,Knuuti et al. (2018)
 thal_reversible,0.0,2.5,1.0,0.5,2.718281828459045,Knuuti et al. (2018)
-ca,0.0,2.5,0.8,0.4,2.225540928492468,Knuuti et al. (2020)
+ca,0.0,2.5,0.8,0.4,2.225540928492468,"Judgement, guided by Knuuti et al. (2018)"
